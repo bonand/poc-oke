@@ -1,0 +1,18 @@
+# ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ .Values.poccccMicroservice.ingress.name }}
+spec:
+  ingressClassName: {{ .Values.poccccMicroservice.ingress.ingressClassName }}
+  rules:
+    http:
+      paths:
+      - path: /write
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.poccccMicroservice.ingress.service }}
+            port:
+              number: {{ .Values.poccccMicroservice.ingress.port }}

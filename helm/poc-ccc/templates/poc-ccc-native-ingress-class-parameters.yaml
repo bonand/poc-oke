@@ -1,0 +1,12 @@
+apiVersion: "ingress.oraclecloud.com/v1beta1"
+kind: IngressClassParameters
+metadata:
+  name: {{ .Values.ociNativeIngressController.ingressClassParameters.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  compartmentId: {{ .Values.ociNativeIngressController.ingressClassParameters.compartmentId }}
+  subnetId: {{ .Values.ociNativeIngressController.ingressClassParameters.subnetId }}
+  loadBalancerName: {{ .Values.ociNativeIngressController.ingressClassParameters.loadBalancerName }}
+  isPrivate: {{ .Values.ociNativeIngressController.ingressClassParameters.isPrivate }}
+  maxBandwidthMbps: {{ .Values.ociNativeIngressController.ingressClassParameters.maxBandwidth }}
+  minBandwidthMbps: {{ .Values.ociNativeIngressController.ingressClassParameters.minBandwidth }}

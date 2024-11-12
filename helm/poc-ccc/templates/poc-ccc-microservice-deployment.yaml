@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.poccccMicroservice.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.poccccMicroservice.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.poccccMicroservice.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.poccccMicroservice.name }}
+    spec:
+      serviceAccountName: {{ .Values.poccccMicroservice.serviceAccount.name }}
+      automountServiceAccount: true
+      containers:
+      - name: {{ .Values.poccccMicroservice.containers.main.name }}
+        image: {{ .Values.poccccMicroservice.containers.main.image }}
+        ports:
+        - containerPort: {{ .Values.poccccMicroservice.containers.main.ports }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.poccccMicroservice.containers.main.objectStorageConfigMap.name }}
+        volumeMounts:
+        - mountPath: "/mnt/nfs"
+          name: poc-ccc-microservice-nfs-mount
+          readOnly: false
+      volumes:
+        - name: poc-ccc-microservice-nfs-volume
+          persistentVolumeClaim:
+            claimName: poc-ccc-nfs-pvc
+      imagePullSecrets: 
+      - name: {{ .Values.poccccMicroservice.imagePullSecrets.name }}

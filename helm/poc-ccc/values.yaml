@@ -1,0 +1,68 @@
+# Default values for poc-ccc.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+poccccMicroservice:
+
+  name: poc-ccc-microservice
+  replicas: 1
+  serviceName: "python-microservice"
+
+  imagePullSecrets:
+    name: oci-registry-secret
+    registry:
+      server:
+      username: 2aksdkfss/andrea.bonadonna@accenture.com
+      password: s>E-8OKHfvuNUrTp7(kk
+      email: andrea.bonadonna@accenture.com
+
+  containers:
+
+    main:
+      name: poc-ccc-microservice-maincontaner
+      image: fra.ocir.io/<tenancy_namespace>/<repository_name>/python-microservice:latest
+      ports: 5000
+
+      objectStorageConfigMap:
+        name: poc-ccc-objectstorage-configmap
+        bucketName: "poccccbucket"
+        objectStorageNamespace: "aad443ffvd"
+        objectName: "poc-ccc-file.txt"
+
+  service:
+
+    name: poc-ccc-microservice-service
+    selector:
+      app: poc-ccc-microservice
+    ports:
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+    type: NodePort
+
+  ingress:
+    name: poc-ccc-microservice-ingress
+    ingressClassName: oci-native-ingress-class
+    service: poc-ccc-microservice-service
+    port: 5000
+  
+  serviceAccount:
+    name: poc-ccc-serviceaccount
+
+  
+
+ociNativeIngressController:
+
+  ingressClassParameters:
+    name: poc-ccc-native-ingress-class-parameters
+    compartmentId: "ocid1.compartment.oc1..aaaaaaaaqqenc5zxffajk3pz4f6ozbkcfz6yidqhz7qqov6jex7b4uzu47fa"
+    subnetId:
+    loadBalancerName: "poc-ccc-microservice-lb"
+    isPrivate: true
+    maxBandwidth: 400
+    minBandwidth: 100
+
+  ingressClass:
+    name: oci-native-ingress-class
+    isDefault: "true"
+    ingressClassParametersName: poc-ccc-native-ingress-class-parameters
+

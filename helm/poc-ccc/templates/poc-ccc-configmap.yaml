@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ .Values.poccccMicroservice.containers.main.objectStorageConfigMap.name }}
+data:
+  OCI_BUCKET_NAME: {{ .Values.poccccMicroservice.containers.main.objectStorageConfigMap.bucketName }}
+  OCI_NAMESPACE: {{ .Values.poccccMicroservice.containers.main.objectStorageConfigMap.objectStorageNamespace }}
+  OBJECT_NAME: {{ .Values.poccccMicroservice.containers.main.objectStorageConfigMap.objectName }}

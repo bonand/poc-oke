@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: {{ .Values.ociNativeIngressController.ingressClass.name }}
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: {{ .Values.ociNativeIngressController.ingressClass.isDefault }}
+spec:
+  controller: oci.oraclecloud.com/native-ingress-controller
+  parameters:
+    scope: Namespace
+    namespace: {{ .Release.Namespace }}
+    apiGroup: ingress.oraclecloud.com
+    kind: ingressclassparameters
+    name: {{ .Values.ociNativeIngressController.ingressClass.ingressClassParametersName }}
