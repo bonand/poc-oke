@@ -43,7 +43,7 @@ poccccMicroservice:
     name: poc-ccc-microservice-ingress
     ingressClassName: oci-native-ingress-class
     service: poc-ccc-microservice-service
-    port: 5000
+    port: 80
   
   serviceAccount:
     name: poc-ccc-serviceaccount

@@ -14,7 +14,7 @@ spec:
         app: {{ .Values.poccccMicroservice.name }}
     spec:
       serviceAccountName: {{ .Values.poccccMicroservice.serviceAccount.name }}
-      automountServiceAccount: true
+      automountServiceAccountToken: true
       containers:
       - name: {{ .Values.poccccMicroservice.containers.main.name }}
         image: {{ .Values.poccccMicroservice.containers.main.image }}
@@ -23,13 +23,5 @@ spec:
         envFrom:
         - configMapRef:
             name: {{ .Values.poccccMicroservice.containers.main.objectStorageConfigMap.name }}
-        volumeMounts:
-        - mountPath: "/mnt/nfs"
-          name: poc-ccc-microservice-nfs-mount
-          readOnly: false
-      volumes:
-        - name: poc-ccc-microservice-nfs-volume
-          persistentVolumeClaim:
-            claimName: poc-ccc-nfs-pvc
       imagePullSecrets: 
       - name: {{ .Values.poccccMicroservice.imagePullSecrets.name }}

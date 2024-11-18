@@ -7,12 +7,10 @@ metadata:
 spec:
   ingressClassName: {{ .Values.poccccMicroservice.ingress.ingressClassName }}
   rules:
-    http:
+  - http:
       paths:
-      - path: /write
-        pathType: Prefix
+      - pathType: Prefix
+        path: /upload
         backend:
-          service:
-            name: {{ .Values.poccccMicroservice.ingress.service }}
-            port:
-              number: {{ .Values.poccccMicroservice.ingress.port }}
+          serviceName: {{ .Values.poccccMicroservice.ingress.service }}
+          servicePort: {{ .Values.poccccMicroservice.ingress.port }}
